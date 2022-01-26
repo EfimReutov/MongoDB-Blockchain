@@ -1,0 +1,34 @@
+version: '3.7'
+
+services:
+  mongodb:
+    image: mongo
+    container_name: mongodb
+    restart: always
+    ports:
+      - "27017:27017"
+    environment:
+      - MONGO_INITDB_DATABASE=mongodb
+      - MONGO_INITDB_ROOT_USERNAME=testUser
+      - MONGO_INITDB_ROOT_PASSWORD=testPassword
+    volumes:
+      - ./init-mongo.js:/docker-entrypoint-initdb.d/init-mongo.js:ro
+#      - ./mongo-volume:/data/db
+    networks:
+      - back-end
+
+#  etherAPI:
+#    image: ether-api-image
+#    container_name: ether-api
+#    build: .
+#    restart: always
+#    ports:
+#      - "1997:1997"
+#    depends_on:
+#      - mongodb
+#    networks:
+#      - back-end
+
+networks:
+  back-end:
+    name: ether-back-end
